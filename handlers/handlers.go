@@ -11,7 +11,7 @@ import (
 var Book struct {
 	Author    *string `gorm:"type:varchar(255);not null" json:"author"`
 	Title     *string `json:"title"`
-	Content   *string `gorm:"type:text;not null"`
+	Content   *string `gorm:"type:text;not null" json:"content"`
 	Publisher *string `json:"publisher"`
 	Year      uint16  `json:"year"`
 }
@@ -64,11 +64,6 @@ func findBook(id string, ctx *gin.Context) (models.Books, error) {
 }
 
 func GetBookHandler(ctx *gin.Context) {
-	//id, err := strconv.Atoi(ctx.Param("id"))
-	//if err != nil {
-	//	log.Fatal("Failed to convert to integer")
-	//}
-
 	book, err := findBook(ctx.Param("id"), ctx)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Book not found"})
